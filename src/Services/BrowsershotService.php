@@ -73,7 +73,7 @@ class BrowsershotService implements PDFRenderer
             ->addChromiumArguments($this->options)
             ->timeout(300)
             ->waitUntilNetworkIdle()
-            ->emulateMedia('screen')
+            ->emulateMedia(config('pdf-renderer.emulate_media'))
             ->showBackground()
             ->ignoreHttpsErrors()
             ->disableJavascript()
