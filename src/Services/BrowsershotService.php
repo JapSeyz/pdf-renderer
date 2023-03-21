@@ -21,6 +21,8 @@ class BrowsershotService implements PDFRenderer
         'disable-web-security',
         'disk-cache-size'  => 33554432,
         'enable-features'  => 'SharedArrayBuffer',
+        'font-render-hinting' => 'none',
+        'force-color-profile' => 'srgb',
         'hide-scrollbars',
         'ignore-gpu-blocklist',
         'in-process-gpu',
