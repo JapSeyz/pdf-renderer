@@ -16,7 +16,7 @@ class API2PDFService implements PDFRenderer
 
     public function __construct()
     {
-        $this->instance = new Api2Pdf(config('pdf-renderer.api2pdf_key'));
+        $this->instance = new Api2Pdf(config('pdf-renderer.api2pdf.key'));
     }
 
     public function template(string $html): self
