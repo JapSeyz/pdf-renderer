@@ -14,11 +14,6 @@ class API2PDFService implements PDFRenderer
     ];
     protected array $margins = [5, 5, 5, 5];
 
-    public function __construct()
-    {
-        $this->instance = new Api2Pdf(config('pdf-renderer.api2pdf.key'));
-    }
-
     public function template(string $html): self
     {
         $this->html = $html;
@@ -77,7 +72,8 @@ class API2PDFService implements PDFRenderer
             'wkhtmltopdf' => 'wkHtmlToPdf',
             default       => 'chromeHtmlToPdf',
         };
-        $resp = $this->instance->{$method}($this->html, options: $this->options);
+        $resp = (new Api2Pdf(config('pdf-renderer.api2pdf.key')))
+            ->{$method}($this->html, options: $this->options);
 
         return $resp->getFileContents() ?? '';
     }
