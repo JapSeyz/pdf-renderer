@@ -12,8 +12,7 @@ class PDFRendererServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('pdf-renderer')
-            ->hasConfigFile()
-            ->hasViews();
+            ->hasConfigFile();
     }
 
     public function boot()
