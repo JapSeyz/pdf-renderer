@@ -7,6 +7,9 @@ return [
     // BrowsershotService::class, API2PDFService::class, SnappyService::class
     'driver' => BrowsershotService::class,
 
+    // Wait for 500ms after the last network connection
+    'wait_for_idle' => true,
+
     // Possible values are:
     // 'screen', 'print'
     'emulate_media' => 'print',

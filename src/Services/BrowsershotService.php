@@ -74,13 +74,16 @@ class BrowsershotService implements PDFRenderer
         $instance = Browsershot::html($this->html)
             ->addChromiumArguments($this->options)
             ->timeout(300)
-            ->waitUntilNetworkIdle()
-            ->emulateMedia(config('pdf-renderer.emulate_media'))
+            ->emulateMedia(config('pdf-renderer.emulate_media', 'print'))
             ->showBackground()
             ->ignoreHttpsErrors()
             ->disableJavascript()
             ->dismissDialogs()
             ->format('A4');
+
+        if (config('pdf-renderer.wait_for_idle', true)) {
+            $instance->waitUntilNetworkIdle();
+        }
 
         if ($this->landscape) {
             $instance->landscape();
