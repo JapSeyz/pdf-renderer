@@ -4,6 +4,7 @@ namespace JapSeyz\PDFRenderer\Services;
 
 use Spatie\Browsershot\Browsershot;
 use JapSeyz\PDFRenderer\Contracts\PDFRenderer;
+use function config;
 
 class BrowsershotService implements PDFRenderer
 {
@@ -83,6 +84,10 @@ class BrowsershotService implements PDFRenderer
 
         if (config('pdf-renderer.wait_for_idle', true)) {
             $instance->waitUntilNetworkIdle();
+        }
+
+        if (($path = config('pdf-renderer.chromium_path'))) {
+            $instance->setChromePath($path);
         }
 
         if ($this->landscape) {

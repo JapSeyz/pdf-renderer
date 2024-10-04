@@ -10,6 +10,9 @@ return [
     // Wait for 500ms after the last network connection
     'wait_for_idle' => true,
 
+    // Path to the Chromium executable
+    'chromium_path' => env('CHROMIUM_PATH', '/usr/bin/chromium-browser'),
+
     // Possible values are:
     // 'screen', 'print'
     'emulate_media' => 'print',
