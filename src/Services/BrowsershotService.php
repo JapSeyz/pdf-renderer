@@ -99,8 +99,8 @@ class BrowsershotService implements PDFRenderer
             $instance->showBrowserHeaderAndFooter();
         }
 
-        $instance->headerHtml($this->header ?? '');
-        $instance->footerHtml($this->footer ?? '');
+        $instance->headerHtml($this->header ?? '<div></div>');
+        $instance->footerHtml($this->footer ?? '<div></div>');
 
         if ($this->margins) {
             $instance->margins(...$this->margins);
