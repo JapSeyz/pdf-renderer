@@ -11,30 +11,30 @@ class BrowsershotService implements PDFRenderer
     protected string $html;
     protected array $options = [
         'allow-running-insecure-content',
-        'autoplay-policy'  => 'user-gesture-required',
+        'autoplay-policy'     => 'user-gesture-required',
         'disable-component-update',
         'disable-domain-reliability',
-        'disable-features' => 'AudioServiceOutOfProcess,IsolateOrigins,site-per-process',
+        'disable-features'    => 'AudioServiceOutOfProcess,IsolateOrigins,site-per-process',
         'disable-print-preview',
         'disable-setuid-sandbox',
         'disable-site-isolation-trials',
         'disable-speech-api',
         'disable-web-security',
-        'disk-cache-size'  => 33554432,
-        'enable-features'  => 'SharedArrayBuffer',
+        'disable-dev-shm-usage',
+        'disk-cache-size'     => 33554432,
+        'enable-features'     => 'SharedArrayBuffer',
         'font-render-hinting' => 'none',
         'force-color-profile' => 'srgb',
         'hide-scrollbars',
         'ignore-gpu-blocklist',
-        'in-process-gpu',
         'mute-audio',
+        'disable-gpu',
         'no-default-browser-check',
         'no-pings',
         'no-sandbox',
         'no-zygote',
-        'use-gl'           => 'swiftshader',
-        'window-size'      => '1920,1080',
-        'single-process',
+        'use-gl'              => 'swiftshader',
+        'window-size'         => '1920,1080',
         'disable-2d-canvas-clip-aa',
         'disable-accelerated-2d-canvas',
         'disable-breakpad',
@@ -74,6 +74,7 @@ class BrowsershotService implements PDFRenderer
     {
         $instance = Browsershot::html($this->html)
             ->addChromiumArguments($this->options)
+            ->noSandbox()
             ->timeout(300)
             ->emulateMedia(config('pdf-renderer.emulate_media', 'print'))
             ->showBackground()
