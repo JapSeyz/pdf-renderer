@@ -55,6 +55,10 @@ class TypesetService implements PDFRenderer
     size: A4 {$orientation};
     margin: {$this->margins[0]}mm {$this->margins[1]}mm {$this->margins[2]}mm {$this->margins[3]}mm;
 }
+.page {
+    break-after: page;
+    break-before: page;
+}
 CSS;
 
         $html = str_replace('</head>', "<style>{$styles}</style></head>", $this->html);
