@@ -5,11 +5,14 @@ namespace JapSeyz\PDFRenderer\Services;
 use Illuminate\Support\Facades\App;
 use JapSeyz\PDFRenderer\Contracts\PDFRenderer;
 use function class_exists;
+use function public_path;
+use function storage_path;
+use function sys_get_temp_dir;
+use function view;
 
-class SnappyService implements PDFRenderer
+class TypesetService implements PDFRenderer
 {
     protected string $html;
-    protected array $options = [];
     protected bool $landscape = false;
     protected ?string $header = null;
     protected ?string $footer = null;
@@ -17,8 +20,8 @@ class SnappyService implements PDFRenderer
 
     public function __construct()
     {
-        if (! class_exists(\Barryvdh\Snappy\PdfWrapper::class)) {
-            throw new \Exception('Snappy is not installed. Please install barryvdh/laravel-snappy');
+        if (! class_exists(\Typesetsh\UriResolver::class)) {
+            throw new \Exception('Typesetsh package is not installed. Please install typesetsh/typesetsh');
         }
     }
 
@@ -43,30 +46,23 @@ class SnappyService implements PDFRenderer
 
     public function render(): string|null
     {
-        /** @var \Barryvdh\Snappy\PdfWrapper $pdf */
-        $pdf = App::make('snappy.pdf.wrapper');
-        $pdf->loadHTML($this->html);
+        $base = public_path();
+        $cachePath = sys_get_temp_dir();
 
-        foreach ($this->options as $key => $val) {
-            $pdf->setOption($key, $val);
-        }
+        $orientation = $this->landscape ? 'landscape' : 'portrait';
+        $styles = <<<CSS
+@page {
+    size: A4 {$orientation};
+    margin: {$this->margins[0]}mm {$this->margins[1]}mm {$this->margins[2]}mm {$this->margins[3]}mm;
+}
+CSS;
 
-        $pdf->setPaper('a4')
-            ->setOrientation($this->landscape ? 'landscape' : 'portrait')
-            ->setOption('margin-top', $this->margins[0])
-            ->setOption('margin-right', $this->margins[1])
-            ->setOption('margin-bottom', $this->margins[2])
-            ->setOption('margin-left', $this->margins[3]);
+        $html = str_replace('</head>', "<style>{$styles}</style></head>", $this->html);
+        $resolveUri = \Typesetsh\UriResolver::all($cachePath, $base);
 
-        if ($this->header) {
-            $pdf->setOption('header-html', $this->header);
-        }
+        $pdf = \Typesetsh\createPdf($html, $resolveUri);
 
-        if ($this->footer) {
-            $pdf->setOption('footer-html', $this->footer);
-        }
-
-        return $pdf->output();
+        return $pdf->asString();
     }
 
     public function landscape(bool $landscape): self
@@ -78,22 +74,16 @@ class SnappyService implements PDFRenderer
 
     public function header(?string $header): self
     {
-        $this->header = $header;
-
-        return $this;
+        throw new \Exception('Method not supported for Typeset.sh');
     }
 
     public function footer(?string $footer): self
     {
-        $this->footer = $footer;
-
-        return $this;
+        throw new \Exception('Method not supported for Typeset.sh');
     }
 
     public function setOption(string $key, mixed $value): self
     {
-        $this->options[$key] = $value;
-
-        return $this;
+        throw new \Exception('Method not supported for Typeset.sh');
     }
 }

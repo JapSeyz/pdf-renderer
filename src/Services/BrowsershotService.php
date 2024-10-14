@@ -4,6 +4,7 @@ namespace JapSeyz\PDFRenderer\Services;
 
 use Spatie\Browsershot\Browsershot;
 use JapSeyz\PDFRenderer\Contracts\PDFRenderer;
+use function class_exists;
 use function config;
 
 class BrowsershotService implements PDFRenderer
@@ -50,6 +51,13 @@ class BrowsershotService implements PDFRenderer
     protected ?string $header = null;
     protected ?string $footer = null;
     protected array $margins = [5, 5, 15, 5];
+
+    public function __construct()
+    {
+        if (! class_exists(\Spatie\Browsershot\Browsershot::class)) {
+            throw new \Exception('Browsershot package is not installed. Please install spatie/browsershot');
+        }
+    }
 
     public function template(string $html): self
     {

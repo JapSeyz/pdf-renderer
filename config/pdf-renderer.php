@@ -4,7 +4,7 @@ use JapSeyz\PDFRenderer\Services\BrowsershotService;
 
 return [
     // Possible values are:
-    // BrowsershotService::class, API2PDFService::class, SnappyService::class
+    // BrowsershotService::class, API2PDFService::class, SnappyService::class, TypesetService::class
     'driver' => BrowsershotService::class,
 
     // Wait for 500ms after the last network connection

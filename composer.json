@@ -17,15 +17,18 @@
     ],
     "require": {
         "php": "^8.1",
-        "api2pdf/api2pdf.php": "^2.0",
-        "barryvdh/laravel-snappy": "^1.0",
-        "spatie/browsershot": "^4.0",
         "spatie/laravel-package-tools": "^1.14.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "nunomaduro/collision": "^7.9|^8.1",
         "orchestra/testbench": "^8.0"
+    },
+    "suggest": {
+        "barryvdh/laravel-snappy": "For generating PDFs using wkhtmltopdf",
+        "spatie/browsershot": "For generating PDFs using puppeteer",
+        "api2pdf/api2pdf.php": "For generating PDFs using api2pdf",
+        "typesetsh/typesetsh": "For generating PDFs using typeset.sh"
     },
     "autoload": {
         "psr-4": {

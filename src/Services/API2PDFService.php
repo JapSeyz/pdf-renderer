@@ -4,6 +4,7 @@ namespace JapSeyz\PDFRenderer\Services;
 
 use Api2Pdf\Api2Pdf;
 use JapSeyz\PDFRenderer\Contracts\PDFRenderer;
+use function class_exists;
 
 class API2PDFService implements PDFRenderer
 {
@@ -13,6 +14,13 @@ class API2PDFService implements PDFRenderer
         'displayHeaderFooter' => true,
     ];
     protected array $margins = [5, 5, 5, 5];
+
+     public function __construct()
+    {
+        if (! class_exists(\Api2Pdf\Api2Pdf::class)) {
+            throw new \Exception('Api2pdf package is not installed. Please install api2pdf/api2pdf');
+        }
+    }
 
     public function template(string $html): self
     {
