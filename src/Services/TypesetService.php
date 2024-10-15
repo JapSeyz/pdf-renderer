@@ -18,6 +18,8 @@ class TypesetService implements PDFRenderer
     protected ?string $footer = null;
     protected array $margins = [5, 5, 15, 5];
 
+    public array $allowedDirectories = [];
+
     public function __construct()
     {
         if (! class_exists(\Typesetsh\UriResolver::class)) {
@@ -46,9 +48,6 @@ class TypesetService implements PDFRenderer
 
     public function render(): string|null
     {
-        $base = public_path();
-        $cachePath = sys_get_temp_dir();
-
         $orientation = $this->landscape ? 'landscape' : 'portrait';
         $styles = <<<CSS
 @page {
@@ -60,9 +59,36 @@ class TypesetService implements PDFRenderer
     break-before: page;
 }
 CSS;
-
         $html = str_replace('</head>', "<style>{$styles}</style></head>", $this->html);
-        $resolveUri = \Typesetsh\UriResolver::all($cachePath, $base);
+
+        // Allow fetching files from these directories
+        if (! $this->allowedDirectories) {
+            $this->allowedDirectories = [
+                storage_path('app/public'),
+                public_path(),
+            ];
+        }
+
+        $cachePath = sys_get_temp_dir();
+
+        // e.g. https://example.org/test.css
+        $http = new \Typesetsh\UriResolver\Http($cachePath);
+
+        // e.g. data:image/png;base64,iVBORw0KGgoAA...
+        $data = new \Typesetsh\UriResolver\Data($cachePath);
+
+        // e.g. file:/images/logo.png
+        $file = new \JapSeyz\PDFRenderer\Overwrites\Typesetsh\UriResolver\File($this->allowedDirectories);
+
+        $resolveUri = new \Typesetsh\UriResolver(
+            [
+                'file'  => $file,
+                'http'  => $http,
+                'https' => $http,
+                'data'  => $data,
+            ],
+            public_path()
+        );
 
         $pdf = \Typesetsh\createPdf($html, $resolveUri);
 
@@ -88,6 +114,11 @@ CSS;
 
     public function setOption(string $key, mixed $value): self
     {
-        throw new \Exception('Method not supported for Typeset.sh');
+        match ($key) {
+            'allowedDirectories' => $this->allowedDirectories = $value,
+            default              => throw new \Exception('Unsupported option for Typeset.sh'),
+        };
+
+        return $this;
     }
 }
