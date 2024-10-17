@@ -1,6 +1,6 @@
 <?php
 
-namespace JapSeyz\PDFRenderer\Overwrites\Typesetsh\UriResolver;
+namespace JapSeyz\PDFRenderer\Overrides\Typesetsh\UriResolver;
 
 class File extends \Typesetsh\UriResolver\File
 {

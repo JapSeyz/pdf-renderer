@@ -78,7 +78,7 @@ CSS;
         $data = new \Typesetsh\UriResolver\Data($cachePath);
 
         // e.g. file:/images/logo.png
-        $file = new \JapSeyz\PDFRenderer\Overwrites\Typesetsh\UriResolver\File($this->allowedDirectories);
+        $file = new \JapSeyz\PDFRenderer\Overrides\Typesetsh\UriResolver\File($this->allowedDirectories);
 
         $resolveUri = new \Typesetsh\UriResolver(
             [

@@ -1,6 +1,6 @@
 <?php
 
-use JapSeyz\PDFRenderer\Overwrites\Typeset\UriResolver\BrowsershotService;
+use JapSeyz\PDFRenderer\Overrides\Typeset\UriResolver\BrowsershotService;
 
 return [
     // Possible values are:
