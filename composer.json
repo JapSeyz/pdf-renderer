@@ -28,7 +28,8 @@
         "barryvdh/laravel-snappy": "For generating PDFs using wkhtmltopdf",
         "spatie/browsershot": "For generating PDFs using puppeteer",
         "api2pdf/api2pdf.php": "For generating PDFs using api2pdf",
-        "typesetsh/typesetsh": "For generating PDFs using typeset.sh"
+        "typesetsh/typesetsh": "For generating PDFs using typeset.sh",
+        "yeslogic/prince-php-wrapper": "For generating PDFs using PrinceXML"
     },
     "autoload": {
         "psr-4": {
