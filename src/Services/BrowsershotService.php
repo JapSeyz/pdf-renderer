@@ -117,9 +117,9 @@ class BrowsershotService implements PDFRenderer
         return $instance->pdf();
     }
 
-    public function landscape(bool $landscape): self
+    public function landscape(bool $landscape = true): self
     {
-        $this->landscape = true;
+        $this->landscape = $landscape;
 
         return $this;
     }

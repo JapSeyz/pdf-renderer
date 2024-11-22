@@ -69,9 +69,9 @@ class SnappyService implements PDFRenderer
         return $pdf->output();
     }
 
-    public function landscape(bool $landscape): self
+    public function landscape(bool $landscape = true): self
     {
-        $this->landscape = true;
+        $this->landscape = $landscape;
 
         return $this;
     }
