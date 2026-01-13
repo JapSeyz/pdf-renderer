@@ -5,6 +5,7 @@ namespace JapSeyz\PDFRenderer\Services;
 use Illuminate\Support\Facades\App;
 use JapSeyz\PDFRenderer\Contracts\PDFRenderer;
 use function class_exists;
+use function config;
 
 class SnappyService implements PDFRenderer
 {
@@ -57,6 +58,11 @@ class SnappyService implements PDFRenderer
             ->setOption('margin-right', $this->margins[1])
             ->setOption('margin-bottom', $this->margins[2])
             ->setOption('margin-left', $this->margins[3]);
+
+        if ($ua = config('pdf-renderer.user_agent')) {
+            $pdf->setOption('custom-header', ['User-Agent' => $ua]);
+            $pdf->setOption('custom-header-propagation', true);
+        }
 
         if ($this->header) {
             $pdf->setOption('header-html', $this->header);

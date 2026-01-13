@@ -63,6 +63,10 @@ CSS;
         $prince->setPDFCreator($this->options['creator'] ?? 'PDFRenderer');
         $prince->setPDFAuthor($this->options['author'] ?? 'PDFRenderer');
 
+        if ($ua = config('pdf-renderer.user_agent')) {
+            $prince->setOptions('--user-agent=' . $ua);
+        }
+
         ob_start();
         $prince->convertStringToPassthru($html);
 

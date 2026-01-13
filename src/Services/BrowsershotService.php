@@ -91,6 +91,10 @@ class BrowsershotService implements PDFRenderer
             ->dismissDialogs()
             ->format('A4');
 
+        if ($ua = config('pdf-renderer.user_agent')) {
+            $instance->userAgent($ua);
+        }
+
         if (config('pdf-renderer.wait_for_idle', true)) {
             $instance->waitUntilNetworkIdle();
         }

@@ -20,6 +20,8 @@ return [
     // 'screen', 'print'
     'emulate_media' => 'print',
 
+    'user_agent' => null,
+
     'api2pdf' => [
         'key'    => env('API2PDF_KEY'),
 
