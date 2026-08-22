@@ -22,7 +22,7 @@
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "nunomaduro/collision": "^7.9|^8.1",
-        "orchestra/testbench": "^8.0"
+        "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0"
     },
     "suggest": {
         "barryvdh/laravel-snappy": "For generating PDFs using wkhtmltopdf",
